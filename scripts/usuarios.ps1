@@ -1,4 +1,3 @@
-# scripts/usuarios.ps1
 # Lee empleados.csv y crea usuarios locales con contraseña aleatoria y privilegios.
 
 $archivo = "datos/empleados.csv"

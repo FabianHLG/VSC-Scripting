@@ -1,12 +1,11 @@
-# scripts/generador_compras.py
 import csv
 import random
 from datetime import datetime
 from faker import Faker
 
-fake = Faker()
+fake = Faker('es_MX')
 
-def generar_compras(cantidad=10):
+def generar_compras(cantidad):
     nombre_archivo = f"datos/compras_{datetime.now().strftime('%Y%m%d')}.csv"
     with open(nombre_archivo, mode='w', newline='', encoding='utf-8') as archivo:
         campos = ['id_transaccion', 'fecha_emision', 'nombre', 'correo', 'telefono', 'direccion', 'ciudad',
@@ -15,10 +14,10 @@ def generar_compras(cantidad=10):
         escritor.writeheader()
         for i in range(1, cantidad + 1):
             fila = {
-                'id_transaccion': f"T{i:04d}",
+                'id_transaccion': f"ID{i:04d}",
                 'fecha_emision': datetime.now().strftime('%Y-%m-%d'),
                 'nombre': fake.name(),
-                'correo': fake.email(),
+                'correo': fake.email(domain="gmail.com,yahoo.com,hotmail.com,Outlook.com".split(',')[random.randint(0, 3)]),
                 'telefono': fake.phone_number(),
                 'direccion': fake.street_address(),
                 'ciudad': fake.city(),

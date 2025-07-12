@@ -1,5 +1,4 @@
 #!/bin/bash
-# scripts/generador_facturas.sh
 
 INPUT="datos/compras_$(date +%Y%m%d).csv"
 TEMPLATE="plantilla_factura.tex"

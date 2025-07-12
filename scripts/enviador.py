@@ -1,4 +1,3 @@
-# scripts/enviador.py
 import csv
 import os
 import re
@@ -8,11 +7,10 @@ from email.message import EmailMessage
 PENDIENTES = "datos/pendientes_envio.csv"
 LOG_ENVIO = "logs/log_envios.csv"
 
-# Configura tu servidor SMTP (ejemplo Gmail)
-SMTP_SERVER = "smtp.gmail.com"
+SMTP_SERVER = "mail.smtp2go.com"
 SMTP_PORT = 587
-SMTP_USER = "tucorreo@gmail.com"      # Cambia aquí
-SMTP_PASS = "tu_contraseña_o_app"     # Cambia aquí
+SMTP_USER = "correos.ctpsanisidro@hotmail.com"
+SMTP_PASS = "6tJ5bKNtZanC4tTD"
 
 def validar_correo(correo):
     patron = r'^[\w\.-]+@[\w\.-]+\.\w+$'
@@ -21,9 +19,20 @@ def validar_correo(correo):
 def enviar_correo(destino, archivo_pdf):
     msg = EmailMessage()
     msg['Subject'] = "Factura Electrónica"
-    msg['From'] = SMTP_USER
+    msg['From'] = 'Facturación IRSI <correos.ctpsanisidro@hotmail.com>'
     msg['To'] = destino
+    html = f"""
+    <html>
+      <body>
+        <p>Estimado cliente,<br>
+           Adjunto encontrará su factura electrónica.<br>
+           <b>Gracias por su preferencia.</b>
+        </p>
+      </body>
+    </html>
+    """
     msg.set_content("Adjunto encontrará su factura electrónica.")
+    msg.add_alternative(html, subtype='html')
 
     with open(archivo_pdf, 'rb') as f:
         contenido = f.read()
