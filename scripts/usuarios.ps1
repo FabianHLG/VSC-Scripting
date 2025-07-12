@@ -15,6 +15,7 @@ if (-Not (Test-Path $archivo)) {
 
 Import-Csv $archivo | ForEach-Object {
     $nombre = $_.nombre
+    $correo = $_.correo
     $usuario = $nombre -replace ' ', ''
     $contrasena = New-Contrasena
     $securePass = ConvertTo-SecureString $contrasena -AsPlainText -Force
@@ -27,7 +28,7 @@ Import-Csv $archivo | ForEach-Object {
         Add-LocalGroupMember -Group "Administradores" -Member $usuario
 
         # Log
-        "$nombre,$usuario,$contrasena,$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" | Out-File -FilePath $logUsuarios -Append
+        "$nombre,$usuario,$correo,$contrasena,$(Get-Date -Format 'yyyy-MM-dd HH:mm:ss')" | Out-File -FilePath $logUsuarios -Append
 
         Write-Host "Usuario $usuario creado correctamente."
     }
