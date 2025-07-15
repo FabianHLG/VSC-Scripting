@@ -20,7 +20,13 @@ Import-Csv $archivo | ForEach-Object {
     $contrasena = New-Contrasena
     $securePass = ConvertTo-SecureString $contrasena -AsPlainText -Force
 
-    try {
+
+    # Verificar si el usuario ya existe
+    if (Get-LocalUser -Name $usuario -ErrorAction SilentlyContinue) {
+        Write-Host "El usuario $usuario ya existe. Se Omite."
+
+    } else {
+          try {
         # Crear usuario local
         New-LocalUser -Name $usuario -Password $securePass -FullName $nombre -Description "Usuario temporal" -ErrorAction Stop
 
@@ -34,5 +40,8 @@ Import-Csv $archivo | ForEach-Object {
     }
     catch {
         Write-Host "Error creando usuario $usuario : $_"
+    }  
     }
+
+    
 }
